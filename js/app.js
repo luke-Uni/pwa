@@ -13,7 +13,7 @@ const coffees = [
     image: "images/coffee3.jpg"
   },
   {
-    name: "Rchitecto",
+    name: "Arvando",
     image: "images/coffee4.jpg"
   },
   {
