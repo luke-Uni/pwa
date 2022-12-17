@@ -10,8 +10,8 @@ function saveToCache() {
     description: "Beschreibung",
     date: "Datums",
     category: "Kategorie",
-    transaction: "Transaktion",
-    balance: "Balance",
+    transaction: "Betrag",
+    balance: "Guthaben",
   };
   const entityJSON = {
     description,
