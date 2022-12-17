@@ -11,20 +11,35 @@ function saveToCache() {
     date: "Datums",
     category: "Kategorie",
     transaction: "Transaktion",
+    balance: "Balance",
   };
   const entityJSON = {
     description,
     date,
-    category: category,
+    category,
     transaction,
+    balance: transaction,
   };
   if (localStorage["someKey"]) {
     const allData = JSON.parse(localStorage["someKey"]);
-    allData[allData.length] = entityJSON;
+    localStorage["someKey"] = JSON.stringify(
+      calculateTransaction(allData, entityJSON)
+    );
     localStorage["someKey"] = JSON.stringify(allData);
   } else {
     localStorage["someKey"] = JSON.stringify([headerJSON, entityJSON]);
   }
+}
+
+function calculateTransaction(list, newEntrance) {
+  for (let i = 0; i < list.length; i++) {
+    if (newEntrance.description == list[i].description) {
+      list[i].balance = +list[i].balance + +newEntrance.transaction;
+      return list;
+    }
+  }
+
+  return (list[list.length] = newEntrance);
 }
 
 function showDataTable() {
@@ -44,18 +59,22 @@ function showDataTable() {
     const cell2 = document.createElement("td");
     const cell3 = document.createElement("td");
     const cell4 = document.createElement("td");
+    const cell5 = document.createElement("td");
     const cellDescription = document.createTextNode(allData[i].description);
     const cellDate = document.createTextNode(allData[i].date);
     const cellCategory = document.createTextNode(allData[i].category);
     const cellTransaction = document.createTextNode(allData[i].transaction);
+    const cellBalance = document.createTextNode(allData[i].balance);
     cell1.appendChild(cellDescription);
     cell2.appendChild(cellDate);
     cell3.appendChild(cellCategory);
     cell4.appendChild(cellTransaction);
+    cell5.appendChild(cellBalance);
     row.appendChild(cell1);
     row.appendChild(cell2);
     row.appendChild(cell3);
     row.appendChild(cell4);
+    row.appendChild(cell5);
 
     // add the row to the end of the table body
     //tblBody.appendChild(rowHeader);
